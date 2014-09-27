@@ -1,0 +1,108 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="guernWallet">
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>Node/Angular Wallet App</title>
+
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		html 					{ overflow-y:scroll; }
+		#amount-list 				{ margin-bottom:30px; }
+		#wallet-form 	 			{ margin-bottom:50px; }
+	</style>
+
+	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
+	<script src="js/controllers/walletCtrl.js"></script> <!-- load up our controller -->
+	<script src="js/services/walletSrvc.js"></script> <!-- load our wallet service -->
+	<script src="js/core.js"></script> <!-- load our main application -->
+
+</head>
+<!-- SET THE CONTROLLER -->
+<body ng-controller="walletController">
+
+	<!-- RESPONSIVE HEADER -->
+	<div class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Guern Wallet</a>
+			</div>
+			<div class="navbar-collapse collapse in">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div><!--/.container -->
+	</div>
+	
+	<div class="container">
+
+		<!-- WALLET HEADER AND OPERATION COUNT -->
+		<div class="jumbotron text-center">
+			<h1>Grand amount: <span class="label label-info">{{ total }}</span></h1>
+		</div>
+
+		<!-- OPERATION LIST -->
+		<div id="amounts-list" class="row">
+			<div class="col-sm-4 col-sm-offset-4">
+
+				
+
+				<!-- LOOP OVER THE AMOUNTS IN $scope.amounts -->
+				<div class="text-center" ng-repeat="amount in amounts">
+					<label>
+						<span>{{ amount.amount }}</span> <!-- span class="glyphicon glyphicon-remove" ng-click="deleteAmount(amount._id)"></span -->
+					</label>
+				</div>
+
+				<p class="text-center" ng-show="loading">
+					<span class="fa fa-spinner fa-spin fa-3x"></span>
+				</p>
+
+			</div>
+		</div>
+
+		<!-- FORM TO ADD AMOUNTS -->
+		<div id="wallet-form" class="row">
+			<div class="col-sm-8 col-sm-offset-2 text-center">
+				<form>
+					<div class="form-group">
+
+						<!-- BIND THIS VALUE TO formData.amount IN ANGULAR -->
+						<input type="text" class="form-control input-lg text-center" placeholder="Insert amount" ng-model="formData.amount">
+					</div>
+
+					<!-- createAmount() WILL CREATE NEW AMOUNTS -->
+					<button type="submit" class="btn btn-primary btn-lg" ng-click="createAmount()">Add</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="text-center text-muted">
+			<p>A demo by <a href="http://github.com/Guern">Guern</a>.</p>
+		</div>
+
+	</div>
+
+</body>
+</html>
