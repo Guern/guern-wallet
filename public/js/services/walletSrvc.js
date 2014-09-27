@@ -10,8 +10,8 @@ angular.module('walletService', [])
 			create : function(data) {
 				return $http.post('/api/amounts', data);
 			},
-			delete : function(id) {
-				return $http.delete('/api/amounts/' + id);
+			delete : function() {
+				return $http.delete('/api/amounts/');
 			}
 		}
 	}]);
