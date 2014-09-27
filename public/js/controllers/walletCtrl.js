@@ -5,6 +5,10 @@ angular.module('walletController', [])
 		$scope.formData = {};
 		$scope.loading = true;
 		$scope.total = 0;
+		$scope.currency = {
+			options: {0: '£', 1: '€', 2: '$'},
+			select: '£'
+		}
 
 		// GET =====================================================================
 		// when landing on the page, get all Amounts and show them

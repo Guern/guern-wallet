@@ -2,7 +2,7 @@
 
 A Node app built with MongoDB and Angular. For demonstration purposes and a tutorial.
 
-Node provides the RESTful API. Angular provides the frontend and accesses the API. MongoDB stores like a hoarder.
+Node provides the RESTful API. Angular provides the frontend and accesses the API. MongoDB stores persistent data.
 
 ## Requirements
 
@@ -10,7 +10,7 @@ Node provides the RESTful API. Angular provides the frontend and accesses the AP
 
 ## Installation
 
-1. Clone the repository: `git clone git@github.com:Guern`
+1. Clone the repository: `https://github.com/Guern/guern-wallet.git`
 2. Install the application: `npm install`
 3. Start the server: `node server.js`
 4. View in browser at `http://localhost:8080`

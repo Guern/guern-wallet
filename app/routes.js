@@ -31,7 +31,8 @@ module.exports = function(app) {
 				res.send(err);
 				
 			// update the total
-			total += amount.amount;
+			if (amount)
+				total += amount.amount;
 
 			// get and return all the amounts after you create another
 			Wallet.find(function(err, amounts) {
