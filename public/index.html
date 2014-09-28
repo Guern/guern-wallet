@@ -80,12 +80,13 @@
 					-->
 					<div class="col-sm-4 col-xs-12">Total: </div>
 					<div class="col-sm-4 col-xs-6">
-						<span class="label label-info" style="">{{ total }}</span>
+						<span class="label label-info" style="">{{ evalTotal | number:2 }}</span>
 					</div>
 					<div class="col-sm-4 col-xs-6">
 						<select class="input-lg"
 								ng-model="currency.select"
-								ng-options="opt as opt.label for opt in currency.options">
+								ng-options="opt as opt.label for opt in currency.options"
+								ng-change="convertTotal()">
 						</select>
 					</div>
 				</div>
@@ -130,6 +131,13 @@
 					<button type="submit" class="btn btn-primary btn-lg" ng-click="createAmount()">Add</button>
 				</form>
 			</div>
+		</div>
+		
+		<div data-alerts="alerts" data-ids="myid" data-fade="1000"></div>
+		
+		<div class="alert alert-danger alert-dismissible fade in" role="alert" style="display: none;">
+			<!--button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button-->
+			You can insert only numeric values!
 		</div>
 
 		<div class="text-center text-muted">

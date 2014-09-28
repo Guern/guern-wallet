@@ -22,6 +22,8 @@ angular.module('walletController', [])
 				$scope.amounts = data.amounts;
 				$scope.total = data.total;
 				$scope.currency.select = getCurrency(data.currency);
+				$scope.change = data.change;
+				$scope.convertTotal();
 				$scope.loading = false;
 			});
 
@@ -30,7 +32,8 @@ angular.module('walletController', [])
 		$scope.createAmount = function() {
 			// validate the formData to make sure that something is there
 			// if form is empty, nothing will happen
-			if ($scope.formData.amount != undefined) {
+			if ($scope.formData.amount != undefined &&
+				!isNaN($scope.formData.amount)) {
 			
 				// TODO: if it is not a number return
 			
@@ -47,7 +50,12 @@ angular.module('walletController', [])
 						$scope.formData = {}; // clear the form so our user is ready to enter another
 						$scope.amounts = data.amounts; // assign our new list of amounts
 						$scope.total = data.total;
+						$scope.change = data.change;
+						$scope.convertTotal();
 					});
+			} else {
+				$scope.formData = {}; // clear the form so our user is ready to enter another
+				$(".alert").show().delay(1500).fadeOut();
 			}
 		};
 
@@ -62,7 +70,13 @@ angular.module('walletController', [])
 					$scope.loading = false;
 					$scope.amounts = {}; // assign our new list of amounts
 					$scope.total = 0;
+					$scope.currency.select = getCurrency('£');
 				});
+		};
+		
+		// calculate total in the current currency
+		$scope.convertTotal = function() {
+			$scope.evalTotal = $scope.total/$scope.change[$scope.currency.select.value];
 		};
 		
 		// get the currency object in select format

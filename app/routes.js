@@ -9,6 +9,7 @@ module.exports = function(app) {
 	
 	// currency change
 	// the total is always the amount in £.
+	// TODO: users can change these
 	var change = {
 		'£': 1,
 		'€': 0.781,
@@ -25,14 +26,15 @@ module.exports = function(app) {
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
-console.log('curr: ' + that.currency + '\n');
-			res.json({amounts: amounts, total: that.total, currency: that.currency}); // return all amounts in JSON format
+			
+			that.updateTotal(amounts);
+			res.json({amounts: amounts, total: that.total, currency: that.currency, change: change}); // return all amounts in JSON format
 		});
 	});
 
 	// create amount and send back all amounts after creation
 	app.post('/api/amounts', function(req, res) {
-console.log('data--- ' + req.body.date + '\n');
+
 		// create an amount, information comes from AJAX request from Angular
 		Amounts.create({
 			amount: req.body.amount,
@@ -43,15 +45,13 @@ console.log('data--- ' + req.body.date + '\n');
 			if (err)
 				res.send(err);
 				
-			console.log('data+++ ' + req.body.date + '\n');
-			that.updateTotal(amount);
-
 			// get and return all the amounts after you create another
 			Amounts.find(function(err, amounts) {
 				if (err)
-					res.send(err)
-					
-				res.json({amounts: amounts, total: that.total, currency: that.currency}); // return all amounts in JSON format
+					res.send(err);
+				
+				that.updateTotal(amounts);
+				res.json({amounts: amounts, total: that.total, currency: that.currency, change: change}); // return all amounts in JSON format
 			});
 		});
 
@@ -74,10 +74,16 @@ console.log('data--- ' + req.body.date + '\n');
 		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 	});
 	
-	this.updateTotal = function(amount) {
-		if (amount && typeof(amount.amount) == "number") {
-			this.total += amount.amount * change[amount.currency];
-			this.currency = amount.currency;
-		}
+	this.updateTotal = function(amounts) {
+		this.total = 0;
+		
+		if (!amounts)
+			return;
+
+		for (var a in amounts)
+			this.total += amounts[a].amount * change[amounts[a].currency];
+			
+		var l = amounts.length;
+		this.currency = (l > 0)? amounts[--l].currency : '£';
 	}
 };
