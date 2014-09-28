@@ -102,10 +102,10 @@
 				<!-- LOOP OVER THE AMOUNTS IN $scope.amounts -->
 				<div class="text-center" ng-repeat="amount in amounts">
 					<div class="col-xs-6">
-						<span class="label label-default pull-right"> {{ amount.amount }} {{ currency.select.value }}</span> <!-- span class="glyphicon glyphicon-remove" ng-click="deleteAmount(amount._id)"></span -->
+						<span class="label label-default pull-right"> {{ amount.amount }} {{ amount.currency }}</span> <!-- span class="glyphicon glyphicon-remove" ng-click="deleteAmount(amount._id)"></span -->
 					</div>
 					<div class="col-xs-6 pull-left">
-						Date
+						{{ amount.date}}
 					</div>
 				</div>
 

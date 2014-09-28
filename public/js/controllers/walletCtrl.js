@@ -10,8 +10,9 @@ angular.module('walletController', [])
 				{ label: '£', value: '£' },
 				{ label: '€', value: '€' },
 				{ label: '$', value: '$' }
-			]		}
-		$scope.currency.select = $scope.currency.options[0];
+			]
+		}
+		//$scope.currency.select = $scope.currency.options[0];
 
 		// GET =====================================================================
 		// when landing on the page, get all Amounts and show them
@@ -20,6 +21,7 @@ angular.module('walletController', [])
 			.success(function(data) {
 				$scope.amounts = data.amounts;
 				$scope.total = data.total;
+				$scope.currency.select = getCurrency(data.currency);
 				$scope.loading = false;
 			});
 
@@ -34,6 +36,7 @@ angular.module('walletController', [])
 			
 				$scope.loading = true;
 				$scope.formData.currency = $scope.currency.select.value;
+				$scope.formData.date = new Date().toLocaleDateString();
 				
 				// call the create function from our service (returns a promise object)
 				Amounts.create($scope.formData)
@@ -61,5 +64,17 @@ angular.module('walletController', [])
 					$scope.total = 0;
 				});
 		};
+		
+		// get the currency object in select format
+		function getCurrency(c) {
+			var opts = $scope.currency.options;
+			
+			for (var i = 0; i < opts.length; i ++) {
+				if (opts[i].label.indexOf(c) == 0)
+					return opts[i];
+			}
+			
+			return opts[0];
+		}
 		
 	}]);

@@ -25,23 +25,25 @@ module.exports = function(app) {
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
-
+console.log('curr: ' + that.currency + '\n');
 			res.json({amounts: amounts, total: that.total, currency: that.currency}); // return all amounts in JSON format
 		});
 	});
 
 	// create amount and send back all amounts after creation
 	app.post('/api/amounts', function(req, res) {
-
+console.log('data--- ' + req.body.date + '\n');
 		// create an amount, information comes from AJAX request from Angular
 		Amounts.create({
 			amount: req.body.amount,
 			currency : req.body.currency,
+			date : req.body.date,
 			done : false
 		}, function(err, amount) {
 			if (err)
 				res.send(err);
 				
+			console.log('data+++ ' + req.body.date + '\n');
 			that.updateTotal(amount);
 
 			// get and return all the amounts after you create another
