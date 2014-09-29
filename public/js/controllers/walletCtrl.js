@@ -35,7 +35,13 @@ angular.module('walletController', [])
 			if ($scope.formData.amount != undefined &&
 				!isNaN($scope.formData.amount)) {
 			
-				// TODO: if it is not a number return
+				// Check if the amount (if negative) is greater than the total
+				var amount = $scope.formData.amount;
+				if (amount < 0 &&
+					Math.abs(amount) > $scope.evalTotal) {
+					$(".alert.too-much").show().delay(2000).fadeOut();
+					return;
+				}
 			
 				$scope.loading = true;
 				$scope.formData.currency = $scope.currency.select.value;
@@ -55,7 +61,7 @@ angular.module('walletController', [])
 					});
 			} else {
 				$scope.formData = {}; // clear the form so our user is ready to enter another
-				$(".alert").show().delay(1500).fadeOut();
+				$(".alert.not-number").show().delay(2000).fadeOut();
 			}
 		};
 
@@ -70,13 +76,24 @@ angular.module('walletController', [])
 					$scope.loading = false;
 					$scope.amounts = {}; // assign our new list of amounts
 					$scope.total = 0;
+					$scope.evalTotal = 0;
 					$scope.currency.select = getCurrency('£');
 				});
 		};
 		
-		// calculate total in the current currency
+		// convert total in the current currency
 		$scope.convertTotal = function() {
-			$scope.evalTotal = $scope.total/$scope.change[$scope.currency.select.value];
+			$scope.evalTotal = $scope.convertAmount($scope.total, $scope.currency.select.value, true);
+		};
+		
+		// convert single amount with the given currency
+		// poundsToCurrency = true if amount is in pounds and must be converted in 'currency'.
+		// Otherwise, poundsToCurrency = false.
+		$scope.convertAmount = function(amount, currency, poundsToCurrency) {
+			if (poundsToCurrency)
+				return amount/$scope.change[currency];
+			else
+				return amount*$scope.change[currency];
 		};
 		
 		// get the currency object in select format
