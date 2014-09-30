@@ -1,5 +1,4 @@
 var Amounts = require('./models/amounts');
-var Wallet = require('./models/wallet');
 
 module.exports = function(app) {
 
@@ -9,7 +8,7 @@ module.exports = function(app) {
 	
 	// currency change
 	// the total is always the amount in £.
-	// TODO: users can change these
+	// TODO: users could be able change these
 	var change = {
 		'£': 1,
 		'€': 0.781,

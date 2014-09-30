@@ -62,37 +62,26 @@
 		<div class="jumbotron text-center">
 			<h1>
 				<div class="form-group">
-				<!--
-					<div class="col-sm-6 col-xs-12">Total: </div>
-					<div class="col-sm-6 col-xs-12">
-						<div class="row">
-							<div class="col-sm-6 col-xs-3 col-xs-offset-3">
-								<span class="label label-info" style="">{{ total }}</span>
-							</div>
-							<div class="col-sm-6 col-xs-3">
-								<select class="input-lg">
-									<option>£</option>
-									<option>€</option>
-									<option>$</option>
-								</select>
-							</div>
+					<div class="row">
+						<div class="col-sm-4 col-xs-12">Total: </div>
+						<div class="col-sm-4 col-xs-6">
+							<span class="label label-info" style="">
+								{{ evalTotal | number:2 }} 
+								<span class="fa" 
+									  ng-class="{'fa-gbp': currency.select.value == '£',
+												 'fa-eur': currency.select.value == '€',
+												 'fa-dollar': currency.select.value == '$' }">
+								</span>
+							</span>
+						</div>
+						<div class="col-sm-4 col-xs-6">
+							<select class="input-lg"
+									ng-model="currency.select"
+									ng-options="opt as opt.label for opt in currency.options"
+									ng-change="convertTotal()">
+							</select>
 						</div>
 					</div>
-					-->
-					<div class="col-sm-4 col-xs-12">Total: </div>
-					<div class="col-sm-4 col-xs-6">
-						<span class="label label-info" style="">{{ evalTotal | number:2 }}</span>
-					</div>
-					<div class="col-sm-4 col-xs-6">
-						<select class="input-lg"
-								ng-model="currency.select"
-								ng-options="opt as opt.label for opt in currency.options"
-								ng-change="convertTotal()">
-						</select>
-					</div>
-				</div>
-				<div class="btn-group">
-					
 				</div>
 			</h1>
 		</div>

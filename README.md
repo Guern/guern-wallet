@@ -6,6 +6,7 @@ Node provides the RESTful API. Angular provides the frontend and accesses the AP
 
 ## Requirements
 
+- Internet connection (mongo DB is hosted on a remote server)
 - [Node and npm](http://nodejs.org)
 
 ## Installation
