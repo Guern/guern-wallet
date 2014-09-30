@@ -4,6 +4,7 @@ angular.module('walletController', [])
 	.controller('walletController', ['$scope','$http','Amounts', function($scope, $http, Amounts) {
 		$scope.formData = {};
 		$scope.loading = true;
+		$scope.viewType = "operations";
 		$scope.total = 0;
 		$scope.currency = {
 			options: [
@@ -12,8 +13,7 @@ angular.module('walletController', [])
 				{ label: '$', value: '$' }
 			]
 		}
-		//$scope.currency.select = $scope.currency.options[0];
-
+		
 		// GET =====================================================================
 		// when landing on the page, get all Amounts and show them
 		// use the service to get all the Amounts

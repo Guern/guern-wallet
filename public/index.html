@@ -25,7 +25,8 @@
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	
-	<script src="js/controllers/walletCtrl.js"></script> <!-- load up our controller -->
+	<script src="js/controllers/walletCtrl.js"></script> <!-- load up wallet controller -->
+	<script src="js/controllers/viewSourceCtrl.js"></script> <!-- load up viewSource controller -->
 	<script src="js/services/walletSrvc.js"></script> <!-- load our wallet service -->
 	<script src="js/core.js"></script> <!-- load our main application -->
 
@@ -47,9 +48,9 @@
 			</div>
 			<div class="navbar-collapse collapse in">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#" ng-click="resetWallet()">Reset</a></li>
-					<li><a href="#">View Source</a></li>
+					<li class="active"><a href="#" ng-click="viewType='operations'">Home</a></li>
+					<li><a href="#" ng-click="resetWallet(); viewType='operations'">Reset</a></li>
+					<li><a href="#" ng-click="viewType='view-source'">View Source</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div><!--/.container -->
@@ -95,53 +96,12 @@
 				</div>
 			</h1>
 		</div>
-
-		<!-- OPERATION LIST -->
-		<div id="amounts-list" class="row">
-			<div class="col-sm-4 col-sm-offset-4">
-			
-				<!-- LOOP OVER THE AMOUNTS IN $scope.amounts -->
-				<div class="text-center" ng-repeat="amount in amounts">
-					<div class="col-xs-6">
-						<span class="label label-default pull-right" 
-							  ng-class="{'label-danger': amount.amount < 0, 'label-success': amount.amount > 0 }">
-							  {{ amount.amount }} {{ amount.currency }}
-						</span>
-					</div>
-					<div class="col-xs-6 pull-left">
-						{{ amount.date}}
-					</div>
-				</div>
-
-				<p class="text-center" ng-show="loading">
-					<span class="fa fa-spinner fa-spin fa-3x"></span>
-				</p>
-
-			</div>
-		</div>
-
-		<!-- FORM TO ADD AMOUNTS -->
-		<div id="wallet-form" class="row">
-			<div class="col-sm-8 col-sm-offset-2 text-center">
-				<form>
-					<div class="form-group">
-
-						<!-- BIND THIS VALUE TO formData.amount IN ANGULAR -->
-						<input type="text" class="form-control input-lg text-center" placeholder="Insert amount" ng-model="formData.amount">
-					</div>
-
-					<!-- createAmount() WILL CREATE NEW AMOUNTS -->
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="createAmount()">Add</button>
-				</form>
-			</div>
-		</div>
-				
-		<div class="alert not-number alert-danger alert-dismissible fade in" role="alert" style="display: none;">
-			You can insert only numeric values!
-		</div>
 		
-		<div class="alert too-much alert-danger alert-dismissible fade in" role="alert" style="display: none;">
-			You cannot remove more than your total amount!
+		
+		<div class="view-source-view" ng-switch on="viewType">
+			<div ng-switch-when="operations"><div ng-include="'views/operation-list-view.html'"></div></div>
+			<div ng-switch-when="view-source"><div ng-include="'views/view-source-view.html'"></div></div>
+			<div ng-switch-default><div ng-include="'views/operation-list-view.html'"></div></div>
 		</div>
 
 		<div class="text-center text-muted">
