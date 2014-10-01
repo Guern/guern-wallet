@@ -37,17 +37,22 @@
 				</div>
 
 				<!-- createAmount() WILL CREATE NEW AMOUNTS -->
-				<button type="submit" class="btn btn-primary btn-lg" ng-click="createAmount()">Add</button>
+				<button type="submit" class="btn btn-success btn-lg" ng-click="createAmount(false)">Add</button>
+				<button type="submit" class="btn btn-danger btn-lg" ng-click="createAmount(true)">Withdraw</button>
 			</form>
 		</div>
 	</div>
 			
-	<div class="alert not-number alert-danger alert-dismissible fade in" role="alert" style="display: none;">
+	<div class="alert not-number alert-danger text-center fade in" role="alert" style="display: none;">
 		You can insert only numeric values!
 	</div>
 	
-	<div class="alert too-much alert-danger alert-dismissible fade in" role="alert" style="display: none;">
+	<div class="alert too-much alert-danger text-center fade in" role="alert" style="display: none;">
 		You cannot remove more than your total amount!
+	</div>
+	
+	<div class="alert positive-values alert-danger text-center fade in" role="alert" style="display: none;">
+		The amount must be greater than 0!
 	</div>
 	
 </div>

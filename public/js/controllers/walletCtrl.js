@@ -29,18 +29,28 @@ angular.module('walletController', [])
 
 		// CREATE ==================================================================
 		// when submitting the add form, send the amount to the node API
-		$scope.createAmount = function() {
+		$scope.createAmount = function(withdraw) {
 			// validate the formData to make sure that something is there
 			// if form is empty, nothing will happen
 			if ($scope.formData.amount != undefined &&
 				!isNaN($scope.formData.amount)) {
-			
-				// Check if the amount (if negative) is greater than the total
-				var amount = $scope.formData.amount;
-				if (amount < 0 &&
-					Math.abs(amount) > $scope.evalTotal) {
-					$(".alert.too-much").show().delay(2000).fadeOut();
+				
+				// check if the amount is positive
+				if ($scope.formData.amount <=0) {
+					$(".alert.positive-values").show().delay(2000).fadeOut();
 					return;
+				}
+			
+				// check if the amount is negative
+				var amount = $scope.formData.amount;
+				if (withdraw) { // if the value must be withdrawed
+					if(amount > $scope.evalTotal) { // if it is greater than the total return
+						$(".alert.too-much").show().delay(2000).fadeOut();
+						return;
+					}
+					
+					// invert the sign
+					$scope.formData.amount = -amount;
 				}
 			
 				$scope.loading = true;
